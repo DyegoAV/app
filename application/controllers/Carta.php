@@ -53,6 +53,16 @@ class Carta extends MY_Controller
         if ($this->ion_auth_acl->has_permission('permite_acessar_campanha_local'))
         {
             $data['instituicao'] = $this->Instituicao_model->get_instituicao_by_usuario($this->user->id)['NU_TBP01'];
+            if (!$this->ion_auth->in_group(array('admin', 'representante-ong'))) {
+                if ($this->ion_auth->in_group('carteiro')) {
+                    $data['carteiro_selecionado'] = $this->user->id;
+                    $data['perfil'] = 'carteiro';
+                }
+                elseif ($this->ion_auth->in_group('mobilizador')) {
+                    $data['mobilizador_selecionado'] = $this->user->id;
+                    $data['perfil'] = 'mobilizador';
+                }
+            }
         }
 
         if (!array_key_exists('campanha', $this->input->get()))
@@ -470,6 +480,7 @@ class Carta extends MY_Controller
                             }
                             else
                             {
+                                $params_responsavel['data_cadastro'] = date('Y-m-d H:i:s');
                                 $idResponsavelAdicional = $this->Responsavel_model->add_responsavel($params);
                             }
                         }
@@ -528,7 +539,7 @@ class Carta extends MY_Controller
                     }
                     
                     $path = $_FILES['imagem']['name'];
-                    
+
                     $newName = 'CARTA_NUMERO_' . $data['carta_pedido']['numero'] . '.' . pathinfo($path, PATHINFO_EXTENSION); 
                     
                     //CONFIGURACAO UPLOAD
@@ -541,7 +552,8 @@ class Carta extends MY_Controller
                     $this->load->library('upload', $config);
                     
                     $this->upload->do_upload('imagem');
-                    $params['arquivo'] = $curYear . '/' . $newName;
+                    $fileData = $this->upload->data();
+                    $params['arquivo'] = $curYear . '/' . $fileData['file_name'];
                 }
                 //ATUALIZACAO DA CARTA =========================================
 
@@ -958,12 +970,23 @@ class Carta extends MY_Controller
     
     function check_cpf_unique($cpf)
     {
-        if ($this->input->post('responsavel_id') && ($this->input->post('documento_numero') == $cpf || $this->input->post('responsavel1NumeroDocumento') == $cpf))
+        if ((array_key_exists('documento_numero', $this->input->post()) && $this->input->post('documento_numero') == $this->input->post('responsavel2NumeroDocumento')) || (array_key_exists('responsavel1NumeroDocumento', $this->input->post()) && $this->input->post('responsavel1NumeroDocumento') == $this->input->post('responsavel2NumeroDocumento'))) {
+            $this->form_validation->set_message('check_cpf_unique', 'CPF do Responsável 1 não pode ser igual ao CPF do Responsável 2.');
+            return false;
+        }
+
+        if ($this->input->post('responsavel_id') && ($this->input->post('documento_numero') == $cpf || $this->input->post('responsavel1NumeroDocumento') == $cpf)) {
             $id = $this->input->post('responsavel_id');
-        elseif ($this->input->post('responsavel2_id') && $this->input->post('responsavel2NumeroDocumento') == $cpf)
+            $descCPF = ($this->input->post('responsavel1NumeroDocumento') == $cpf ? 'CPF do Responsável 1' : 'CPF');
+        }
+        elseif ($this->input->post('responsavel2_id') && $this->input->post('responsavel2NumeroDocumento') == $cpf) {
             $id = $this->input->post('responsavel2_id');
-        else
+            $descCPF = 'CPF do Responsável 2';
+        }
+        else {
             $id = '';
+            $descCPF = 'CPF';
+        }
 
         $cpf = preg_replace("/\D/", "", $cpf);
         $result = $this->Responsavel_model->check_unique_cpf($id, $cpf);
@@ -975,13 +998,13 @@ class Carta extends MY_Controller
                 $response = true;
             else
             {
-                $this->form_validation->set_message('check_cpf_unique', 'CPF inválido.');
+                $this->form_validation->set_message('check_cpf_unique', $descCPF . ' inválido.');
                 $response = false;
             }
         }
         else
         {
-            $this->form_validation->set_message('check_cpf_unique', 'CPF já existe na base de dados.');
+            $this->form_validation->set_message('check_cpf_unique', $descCPF . ' já existe na base de dados.');
             $response = false;
         }
         return $response;

@@ -54,7 +54,7 @@
                             	<?php 
                             	foreach($this->session->userdata('cartasAdotante') as $carta) {
                             	?>
-                                <li class="active" style="margin-top:10px; margin-bottom:10px;"><a href="<?php echo site_url('presente/add/'.$carta['id']);?>"> <?php echo $carta['numero'];?></a></li>
+                                <li class="active" style="margin-top:10px; margin-bottom:10px;"><a href="<?php echo site_url('adotante/add/'.$carta['id']);?>"> <?php echo $carta['numero'];?></a></li>
                                 <?php } ?>
                             </ul>
                         </li>
@@ -93,7 +93,7 @@
             </div>
             <!-- /.content-wrapper -->
             <footer class="main-footer">
-                <strong>Natal Solidário 2018</strong>
+                <strong>Natal Solidário <?php echo $campanha_atual['AA_CAMPANHA']; ?></strong>
             </footer>
 
             <!-- Control Sidebar -->

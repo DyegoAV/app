@@ -10,6 +10,7 @@
 
 <?php
 $permissoes_usuario = $this->session->userdata('permissoes_usuario');
+$usuario_id = $this->session->userdata('usuario_logado_id');
 ?>
 <div class="row">
     <div class="col-md-12">
@@ -53,7 +54,7 @@ $permissoes_usuario = $this->session->userdata('permissoes_usuario');
                         <div class="row clearfix">
                             <div class="col-md-4">
                                 <label>Carteiro</label>
-                                <select name="carteiro" class="form-control" onchange="sendMyForm();">
+                                <select name="carteiro" class="form-control" onchange="sendMyForm();"<?php echo in_array($perfil, array('carteiro', 'mobilizador')) ? ' disabled' : '' ?>>
                                     <option value="">Todos</option>
                                     <?php 
                                     foreach($carteiros as $carteiro) {
@@ -65,7 +66,7 @@ $permissoes_usuario = $this->session->userdata('permissoes_usuario');
                             </div>
                             <div class="col-md-4">
                                 <label>Mobilizador</label>
-                                <select name="mobilizador" class="form-control" onchange="sendMyForm();">
+                                <select name="mobilizador" class="form-control" onchange="sendMyForm();"<?php echo $perfil == 'mobilizador' ? ' disabled' : '' ?>>
                                     <option value="">Todos</option>
                                     <?php 
                                     foreach($mobilizadores as $mobilizador) {
@@ -218,8 +219,7 @@ $permissoes_usuario = $this->session->userdata('permissoes_usuario');
             <div class="box-body">
                 <div class="row">
                     <div class="col-md-6">
-                        <div style="font-weight: bold;">Total de cartas encontradas: <?php echo $total_registros;?>
-                        </div>
+                        <div style="font-weight: bold;">Total de cartas encontradas: <?php echo $total_registros;?></div>
                     </div>
                     <div class="col-md-6 text-right">
                         <?php if (array_key_exists("acesso_admin", $permissoes_usuario)) { ?>
@@ -290,9 +290,7 @@ $permissoes_usuario = $this->session->userdata('permissoes_usuario');
                     foreach ($cartas as $c) {
                     ?>
                     <tr>
-                        <td><input type="checkbox" class="selecao" data-carta="<?php echo $c["id"]; ?>"
-                                <?php echo ($c['carteiro_associado'] && $c['mobilizador'] ? " disabled" : ""); ?> />
-                        </td>
+                        <td><input type="checkbox" class="selecao" data-carta="<?php echo $c["id"]; ?>" <?php echo ($c['carteiro_associado'] && $c['adotante'] ? " disabled" : ""); ?> /></td>
                         <td><?php echo $c['numero']; ?></td>
                         <td><?php echo date("d/m/Y", strtotime($c['data_cadastro'])); ?></td>
                         <td><?php echo $c['beneficiado_nome']; ?></td>
@@ -337,7 +335,7 @@ $permissoes_usuario = $this->session->userdata('permissoes_usuario');
                                 endif;
                                 ?>
 
-                                <div class="btn-group" role="group">
+                                <div class="btn-group<?php echo in_array($perfil, array('carteiro', 'mobilizador')) ? ' hidden' : '' ?>" role="group">
                                     <button type="button" class="btn btn-primary btn-xs dropdown-toggle"
                                         data-toggle="dropdown" aria-haspopup="false" aria-expanded="false">
                                         <span class="caret"></span>

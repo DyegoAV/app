@@ -2,7 +2,7 @@
     <h3 class="box-title">Cadastro de presentes</h3>
 </div>
 <div class="row">
-	<?php echo form_open('presente/add/'.$cartaSelecionada['id'], array('method'=>'post','id'=>'myform')); ?>
+	<?php echo form_open('adotante/add/'.$cartaSelecionada['id'], array('method'=>'post','id'=>'myform')); ?>
     <div class="col-md-12">
         <div class="box">
         	<div class="panel panel-primary">
@@ -24,6 +24,7 @@
                         	<label>* Qual o brinquedo que a criança irá receber?</label>
                             <input type="text" name="descricaoBrinquedo" value="<?php echo $descricaoPresente;?>" class="form-control"
                             	<?php echo ($situacao == 1) ? '' : 'disabled';?> />
+							<span class="text-danger"><?php echo form_error('descricaoBrinquedo');?></span>
             			</div>
             			<div class="col-md-4">
                         	<label>* Classificação do brinquedo</label>
@@ -38,21 +39,23 @@
 									} 
 								?>
 							</select>
+							<span class="text-danger"><?php echo form_error('classificacaoBrinquedo');?></span>
             			</div>
             			<div class="col-md-4">
 							<label>Valor do brinquedo (opcional) </label>
 							
 							<?php
 							$faixas_valor = array(
-								'Até 50,00',
-								'51,00 a 100,00',
-								'101,00 a 200,00',
-								'201,00 a 300,00',
-								'301,00 a 400,00',
-								'401,00 a 500,00',
-								'501,00 a 800,00',
-								'801,00 a 1.000,00',
-								'Acima de 1.000,00'
+								0 => 'Até 50,00',
+								1 => '51,00 a 100,00',
+								2 => '101,00 a 200,00',
+								3 => '201,00 a 300,00',
+								4 => '301,00 a 400,00',
+								5 => '401,00 a 500,00',
+								6 => '501,00 a 800,00',
+								7 => '801,00 a 1.000,00',
+								8 => 'Acima de 1.000,00',
+								9 => 'Prefiro não informar'
 							);
 							?>
 							
@@ -61,16 +64,11 @@
 								<option value="">Selecione</option>
 								<?php 
 								    foreach($faixas_valor as $valor) {
-								        $selected = ($classificacaoBrinquedo == $classificacao['id']) ? ' selected="selected"' : "";
-
-										echo '<option value="'.$classificacao['id'].'" '.$selected.'>'.$classificacao['nome'].'</option>';
+										$selected = ($valorBrinquedo == $valor) ? ' selected="selected"' : "";
+										echo '<option value="'.$valor.'" '.$selected.'>'.$valor.'</option>';
 									} 
 								?>
 							</select>
-
-                            <input type="text" name="valorBrinquedo" value="<?php echo $valorBrinquedo;?>" class="form-control money"
-                            	<?php echo ($situacao == 1) ? '' : 'disabled';?> />
-                            <span style="font-style: italic;font-weight:bold;">* O valor do brinquedo é importante para os devidos cuidados com o seu armazenamento.</span>
             			</div>
             		</div>
 				</div>
@@ -104,7 +102,7 @@
 				<div class="panel-body">
 					<h4>Após a impressão, favor colar a etiqueta preferencialmente em <b>dois lugares</b> de forma que fique <b>bem fixado</b> e <b>visível</b>.</h4>
 				</div>
-				<div class="panel-footer"><a href="<?php echo site_url('presente/gerarEtiqueta/'.$cartaSelecionada['numero']."/". $cartaSelecionada['responsavel_nome'] . "/" . $cartaSelecionada['beneficiado_nome']); ?>" class="btn btn-success" target="_blank">Visualizar etiqueta</a></div>
+				<div class="panel-footer"><a href="<?php echo site_url('adotante/gerarEtiqueta/'.$cartaSelecionada['numero']."/". $cartaSelecionada['responsavel_nome'] . "/" . $cartaSelecionada['beneficiado_nome']); ?>" class="btn btn-success" target="_blank">Visualizar etiqueta</a></div>
 			</div>
 		</div>
 		<div class="box">

@@ -241,7 +241,20 @@
                     </li>
                     <li>
                         <a href="#">
-                            <i class="fa fa-calendar-check-o"></i> <span>Programação </span>
+                            <i class="fa fa-map-marker"></i> <span>Locais</span>
+                        </a>
+                        <ul class="treeview-menu">
+                            <li>
+                                <a href="<?php echo site_url('local/add'); ?>"><i class="fa fa-plus"></i> Novo</a>
+                            </li>
+                            <li>
+                                <a href="<?php echo site_url('local/index'); ?>"><i class="fa fa-list-ul"></i> Listar</a>
+                            </li>
+                        </ul>
+                    </li>
+                    <li>
+                        <a href="#">
+                            <i class="fa fa-calendar-check-o"></i> <span>Programação</span>
                         </a>
                         <ul class="treeview-menu">
                             <li>

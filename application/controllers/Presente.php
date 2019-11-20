@@ -43,17 +43,6 @@ class Presente extends MY_Controller
         }
     }
     
-    function index($idAdotante = null, $token = null)
-    {
-        $this->session->set_userdata('idAdotante', $idAdotante);
-        $this->session->set_userdata('tokenAdotante', $token);
-        
-        $this->carregarMenu($idAdotante, $token);
-        
-        $data['_view'] = 'presente/index';
-        $this->load->view('layouts/main_presente',$data);
-    }
-    
     function add($idCarta = null)
     {
         $this->form_validation->set_rules('descricaoBrinquedo','Brinquedo','required');
@@ -133,14 +122,7 @@ class Presente extends MY_Controller
             // exit();
 
             $data['_view'] = 'presente/add';
-            if($data['origem'] == 'recebimentoPresente')
-            {
-                $this->load->view('layouts/main',$data);
-            }
-            else
-            {
-                $this->load->view('layouts/main_presente',$data);    
-            }
+            $this->load->view('layouts/main', $data);
             
         }
     }
@@ -306,7 +288,7 @@ class Presente extends MY_Controller
     {
         $sysconfig = $this->NatalSolidario_model->get_all_config();
 
-        if ($sysconfig['smtp_host'] && $sysconfig['smtp_user'] && $sysconfig['smtp_pass'])
+        if (array_key_exists('smtp_host', $sysconfig) && array_key_exists('smtp_user', $sysconfig) && array_key_exists('smtp_pass', $sysconfig))
         {
             $config = Array(
                 'protocol' => 'smtp', // 'mail', 'sendmail', 'smtp'
@@ -316,7 +298,7 @@ class Presente extends MY_Controller
                 'smtp_pass' => $sysconfig['smtp_pass'],
                 'mailtype'  => 'html', // 'text', 'html'
                 'charset'   => 'utf-8',
-                'smtp_crypto' => 'ssl', // 'ssl', 'tls'
+                'smtp_crypto' => (isset($sysconfig['smtp_crypto']) ? $sysconfig['smtp_crypto'] : 'ssl'), // 'ssl', 'tls'
                 'validate' => TRUE,
                 'newline' => "\r\n"
                 );

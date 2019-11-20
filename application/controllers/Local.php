@@ -8,15 +8,21 @@ class Local extends MY_Controller
         $this->load->model('Local_entrega_regiao_model');
     }
 
-    /*
-     * Listing of responsaveis
-     */
     function index()
     {
-        $data['locais'] = $this->local_entrega_model->get_locais_armazenamento();
+        $data['locais'] = $this->Local_entrega_model->get_locais();
         
-        $data['js_scripts'] = array('responsavel/index.js');
-        $data['_view'] = 'responsavel/index';
+        $data['js_scripts'] = array('local/index.js');
+        $data['_view'] = 'local/index';
+        $this->load->view('layouts/main',$data);
+    }
+
+    function add()
+    {
+        $data['tipos'] = $this->Local_entrega_model->get_tipos();
+
+        $data['js_scripts'] = array('local/add.js');
+        $data['_view'] = 'local/add';
         $this->load->view('layouts/main',$data);
     }
 }

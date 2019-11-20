@@ -9,6 +9,14 @@ class Local_entrega_model extends CI_Model
     function get_locais() {
         return $this->db->get('local_entrega')->result_array();
     }
+    
+    function get_locais_ativos() {
+        return $this->db->get_where('local_entrega', array('ativo' => 1))->result_array();
+    }
+    
+    function get_tipos() {
+        return $this->db->get_where('local_tipo', array('ativo' => 1))->result_array();
+    }
 
     function get_locais_armazenamento() {
         return $this->db->get_where('local_entrega',array('local_entrega_familias' => 0))->result_array();
