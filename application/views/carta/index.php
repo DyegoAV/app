@@ -54,7 +54,7 @@ $usuario_id = $this->session->userdata('usuario_logado_id');
                         <div class="row clearfix">
                             <div class="col-md-4">
                                 <label>Carteiro</label>
-                                <select name="carteiro" class="form-control" onchange="sendMyForm();"<?php echo in_array($perfil, array('carteiro', 'mobilizador')) ? ' disabled' : '' ?>>
+                                <select name="carteiro" class="form-control" onchange="sendMyForm();">
                                     <option value="">Todos</option>
                                     <?php 
                                     foreach($carteiros as $carteiro) {
@@ -66,7 +66,7 @@ $usuario_id = $this->session->userdata('usuario_logado_id');
                             </div>
                             <div class="col-md-4">
                                 <label>Mobilizador</label>
-                                <select name="mobilizador" class="form-control" onchange="sendMyForm();"<?php echo $perfil == 'mobilizador' ? ' disabled' : '' ?>>
+                                <select name="mobilizador" class="form-control" onchange="sendMyForm();">
                                     <option value="">Todos</option>
                                     <?php 
                                     foreach($mobilizadores as $mobilizador) {
@@ -335,7 +335,7 @@ $usuario_id = $this->session->userdata('usuario_logado_id');
                                 endif;
                                 ?>
 
-                                <div class="btn-group<?php echo in_array($perfil, array('carteiro', 'mobilizador')) ? ' hidden' : '' ?>" role="group">
+                                <div class="btn-group" role="group">
                                     <button type="button" class="btn btn-primary btn-xs dropdown-toggle"
                                         data-toggle="dropdown" aria-haspopup="false" aria-expanded="false">
                                         <span class="caret"></span>

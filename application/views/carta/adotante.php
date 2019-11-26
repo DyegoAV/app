@@ -42,7 +42,7 @@
         					<div class="col-md-4">
         						<label for="numero" class="control-label"><span class="text-danger">*</span>Celular</label>
         						<div class="form-group">
-        							<input type="text" name="celular" value="<?php echo $adotante['telefone']; ?>" class="phones form-control" id="celular" />
+        							<input type="text" name="celular" value="<?php echo $adotante['telefone']; ?>" class="form-control telefone" id="celular" />
             						<span class="text-danger"><?php echo form_error('celular');?></span>
         						</div>
         					</div>        					
@@ -67,7 +67,7 @@
         					<div class="col-md-4">
         						<label for="numero" class="control-label">Telefone do trabalho</label>
         						<div class="form-group">
-        							<input type="text" name="telefone_trabalho" value="<?php echo $adotante['telefone_trabalho']; ?>" class="phones form-control" id="telefone_trabalho" />
+        							<input type="text" name="telefone_trabalho" value="<?php echo $adotante['telefone_trabalho']; ?>" class="form-control telefone" id="telefone_trabalho" />
         							<span class="text-danger"><?php echo form_error('telefone_trabalho');?></span>
         						</div>
         					</div>

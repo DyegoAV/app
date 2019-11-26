@@ -11,8 +11,8 @@ class Adotante extends CI_Controller
         $this->load->model('Adotante_model');
         $this->load->model('Brinquedo_classificacao_model');
         $this->load->model('Presente_model');
-        $this->load->model('Local_entrega_regiao_model');
-        $this->load->model('Local_entrega_model');
+        $this->load->model('Evento_model');
+        $this->load->model('Local_model');
         $this->load->model('Presente_historico_situacao_model');
         $this->load->model('NatalSolidario_model');
         
@@ -140,14 +140,14 @@ class Adotante extends CI_Controller
 
             $data['idade'] = date("Y") - date("Y", strtotime($data['cartaSelecionada']['data_nascimento']));
             
-            $data['locais_entrega'] = $this->Local_entrega_regiao_model->get_local_entrega_por_regiao($data['cartaSelecionada']['regiao_administrativa'], date('Y/m/d'));
+            $data['locais_entrega'] = $this->Evento_model->get_evento_por_regiao($data['cartaSelecionada']['regiao_administrativa'], date('Y/m/d'));
             if (!$data['locais_entrega']) {
                 $data['locais_entrega'] = [];
             }
             
-            $data['local_entrega_familia'] = $this->Local_entrega_regiao_model->get_local_entrega_familias_por_regiao($data['cartaSelecionada']['regiao_administrativa']);
-            if (!$data['local_entrega_familia']) {
-                $data['local_entrega_familia'] = '';
+            $data['evento_familia'] = $this->Evento_model->get_evento_familias_por_regiao($data['cartaSelecionada']['regiao_administrativa']);
+            if (!$data['evento_familia']) {
+                $data['evento_familia'] = '';
             }
             $dadosPresente = $this->Presente_model->get_dados_presente($this->input->post('numeroCarta'));
             $data['nomeLocalEntrega'] = urlencode($dadosPresente['nomeLocalEntrega']);

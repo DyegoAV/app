@@ -6,7 +6,7 @@ class Entrega extends MY_Controller{
         
         $this->load->model('Sala_entrega_presente_model');
         $this->load->model('Sala_entrega_responsavel_model');
-        $this->load->model('Local_entrega_regiao_model');
+        $this->load->model('Evento_model');
         $this->load->model('Carta_model');
         $this->load->model('Regiao_administrativa_model');
     }
@@ -48,7 +48,7 @@ class Entrega extends MY_Controller{
     
     function listagem_local_entrega()
     {
-        $data['locaisEntrega'] = $this->Local_entrega_regiao_model->get_local_entrega_familias();
+        $data['locaisEntrega'] = $this->Evento_model->get_local_entrega_familias();
         $data['_view'] = 'entrega/listagem_local_entrega';
         $this->load->view('layouts/main',$data);
     }

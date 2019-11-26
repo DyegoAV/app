@@ -254,6 +254,19 @@
                     </li>
                     <li>
                         <a href="#">
+                            <i class="fa fa-bolt"></i> <span>Eventos</span>
+                        </a>
+                        <ul class="treeview-menu">
+                            <li>
+                                <a href="<?php echo site_url('evento/add'); ?>"><i class="fa fa-plus"></i> Novo</a>
+                            </li>
+                            <li>
+                                <a href="<?php echo site_url('evento/index'); ?>"><i class="fa fa-list-ul"></i> Listar</a>
+                            </li>
+                        </ul>
+                    </li>
+                    <li>
+                        <a href="#">
                             <i class="fa fa-calendar-check-o"></i> <span>Programação</span>
                         </a>
                         <ul class="treeview-menu">

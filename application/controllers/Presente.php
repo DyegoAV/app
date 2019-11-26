@@ -10,7 +10,7 @@ class Presente extends MY_Controller
         $this->load->model('Adotante_model');
         $this->load->model('Brinquedo_classificacao_model');
         $this->load->model('Presente_model');
-        $this->load->model('Local_entrega_regiao_model');
+        $this->load->model('Evento_model');
         $this->load->model('Local_entrega_model');
         $this->load->model('Presente_historico_situacao_model');
         $this->load->model('NatalSolidario_model');
@@ -102,12 +102,12 @@ class Presente extends MY_Controller
 
             $data['idade'] = date("Y") - date("Y", strtotime($data['cartaSelecionada']['data_nascimento']));
             
-            $data['locais_entrega'] = $this->Local_entrega_regiao_model->get_local_entrega_por_regiao($data['cartaSelecionada']['regiao_administrativa'], date('Y/m/d'));
+            $data['locais_entrega'] = $this->Evento_model->get_local_entrega_por_regiao($data['cartaSelecionada']['regiao_administrativa'], date('Y/m/d'));
             if (!$data['locais_entrega']) {
                 $data['locais_entrega'] = [];
             }
             
-            $data['local_entrega_familia'] = $this->Local_entrega_regiao_model->get_local_entrega_familias_por_regiao($data['cartaSelecionada']['regiao_administrativa']);
+            $data['local_entrega_familia'] = $this->Evento_model->get_local_entrega_familias_por_regiao($data['cartaSelecionada']['regiao_administrativa']);
             if (!$data['local_entrega_familia']) {
                 $data['local_entrega_familia'] = '';
             }
@@ -159,7 +159,7 @@ class Presente extends MY_Controller
 
             $data['allLocaisArmazenamento'] = $this->Local_entrega_model->get_locais_armazenamento();
             $data['allSituacoesPresente'] = $this->Presente_model->get_all_situacoes_presente();
-            $data['allLocaisEntrega'] = $this->Local_entrega_regiao_model->get_local_entrega_familias();
+            $data['allLocaisEntrega'] = $this->Evento_model->get_local_entrega_familias();
 
             if($this->input->post('local_armazenamento')) {
                 $params = array(
@@ -323,7 +323,7 @@ class Presente extends MY_Controller
         
         $totalPresentesConferidosPorRegiao = $this->Presente_model->get_presentes_por_local_entrega();
         
-        $locaisEntrega = $this->Local_entrega_regiao_model->get_local_entrega_familias();
+        $locaisEntrega = $this->Evento_model->get_local_entrega_familias();
         $data['locaisEntrega'] = $locaisEntrega;
         
         $data['totalCartasRecebidasPorRegiao'] = array();

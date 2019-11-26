@@ -1,5 +1,5 @@
 <?php (defined('BASEPATH')) OR exit('No direct script access allowed');
-class Local extends MY_Controller
+class Evento extends MY_Controller
 {
     function __construct()
     {
@@ -10,19 +10,19 @@ class Local extends MY_Controller
 
     function index()
     {
-        $data['locais'] = $this->Local_model->get_locais();
+        $data['eventos'] = $this->Evento_model->get_eventos();
 
-        $data['js_scripts'] = array('local/index.js');
-        $data['_view'] = 'local/index';
+        $data['js_scripts'] = array('evento/index.js');
+        $data['_view'] = 'evento/index';
         $this->load->view('layouts/main',$data);
     }
 
     function add()
     {
-        $data['tipos'] = $this->Local_model->get_tipos();
-
-        $data['js_scripts'] = array('local/add.js');
-        $data['_view'] = 'local/add';
+        $data['locais'] = $this->Local_model->get_locais_ativos();
+        
+        $data['js_scripts'] = array('evento/add.js');
+        $data['_view'] = 'evento/add';
         $this->load->view('layouts/main',$data);
     }
 }

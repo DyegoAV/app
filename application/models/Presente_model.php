@@ -34,7 +34,7 @@ class Presente_model extends CI_Model
         $this->db->join('presente p', 'carta.id = p.carta', 'left');
         $this->db->join('sala_entrega_responsavel salar', 'r.id = salar.responsavel', 'left');
         $this->db->join('sala_entrega_presente salap', 'salar.sala_entrega_presente = salap.id', 'left');
-        $this->db->join('local_entrega local', 'local.id = salap.local_entrega');
+        $this->db->join('local', 'local.id = salap.local_entrega');
         $this->db->like('carta.removida', false);
 
 
@@ -52,7 +52,7 @@ class Presente_model extends CI_Model
     function get_presentes_por_local_entrega($campanha=0) {
         $query = $this->db->query('SELECT c.regiao_administrativa as carta_destino, r.nome as presente_nome_regiao_entrega
             , l.nome as presente_nome_local_entrega, COUNT(p.id) AS total 
-            FROM local_entrega l
+            FROM local l
             INNER JOIN local_entrega_regiao lr ON lr.local_entrega = l.id
             INNER JOIN regiao_administrativa r ON r.id = lr.regiao_administrativa
             LEFT JOIN presente p ON p.local_entrega = l.id AND p.situacao >= 4

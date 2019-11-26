@@ -21,7 +21,7 @@
                         </tr>
                     </thead>
                     <tbody>
-                        <?php foreach($beneficiados as $b){ ?>
+                        <?php foreach($beneficiados as $b) { ?>
                         <tr>
                             <!-- <td><?php //echo $b['id']; ?></td> -->
                             <td><?php echo $b['nome']; ?></td>

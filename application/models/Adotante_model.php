@@ -26,7 +26,7 @@ class Adotante_model extends CI_Model
     
     function get_adotante_por_email($email)
     {
-        return $this->db->get_where('adotante', array('email' => $email))->result_array();
+        return $this->db->get_where('adotante', array('email' => $email))->row_array();
     }
     
     function get_adotante_por_telefone($telefone)
@@ -34,7 +34,7 @@ class Adotante_model extends CI_Model
         $this->db->from('adotante');
         $this->db->where('telefone', $telefone);
         $this->db->or_where('telefone_trabalho', $telefone);
-        return $this->db->get()->result_array();
+        return $this->db->get()->row_array();
     }
     
     function get_adotante($param)
@@ -43,7 +43,7 @@ class Adotante_model extends CI_Model
         $this->db->where('telefone', $param);
         $this->db->or_where('telefone_trabalho', $param);
         $this->db->or_where('email', $param);
-        return $this->db->get()->result_array();
+        return $this->db->get()->row_array();
     }
 
     function get_adotante_por_status_envio_email($status)

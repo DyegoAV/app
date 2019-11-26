@@ -53,16 +53,6 @@ class Carta extends MY_Controller
         if ($this->ion_auth_acl->has_permission('permite_acessar_campanha_local'))
         {
             $data['instituicao'] = $this->Instituicao_model->get_instituicao_by_usuario($this->user->id)['NU_TBP01'];
-            if (!$this->ion_auth->in_group(array('admin', 'representante-ong'))) {
-                if ($this->ion_auth->in_group('carteiro')) {
-                    $data['carteiro_selecionado'] = $this->user->id;
-                    $data['perfil'] = 'carteiro';
-                }
-                elseif ($this->ion_auth->in_group('mobilizador')) {
-                    $data['mobilizador_selecionado'] = $this->user->id;
-                    $data['perfil'] = 'mobilizador';
-                }
-            }
         }
 
         if (!array_key_exists('campanha', $this->input->get()))
@@ -619,25 +609,27 @@ class Carta extends MY_Controller
                 $data['adotante'] = $this->Adotante_model->get_adotante_por_id($data['carta_pedido']['adotante']);
             }
             
-            if($this->input->post('acao') === 'save')
+            if ($this->input->post('acao') === 'save')
             {
                 $this->form_validation->set_rules('nome','Nome','required|max_length[300]');
                 $this->form_validation->set_rules('celular','Celular','required');
                 $this->form_validation->set_rules('email','E-mail pessoal','required|max_length[300]');
                 
-                if($this->form_validation->run())
+                if ($this->form_validation->run())
                 {
-                    
                     $email = trim($this->input->post('email'));
                     $adotante = $this->Adotante_model->get_adotante_por_email($email);
                     
                     $params['nome'] = $this->input->post('nome');
                     $params['email'] = $this->input->post('email');
-                    $params['telefone'] = preg_replace("/[^0-9,.]/", "", $this->input->post('celular'));
+                    $params['telefone'] = preg_replace("/[^0-9]/", "", $this->input->post('celular'));
                     $params['local_trabalho'] = $this->input->post('local_trabalho');
-                    $params['telefone_trabalho'] = preg_replace("/[^0-9,.]/", "", $this->input->post('telefone_trabalho'));
+                    $params['telefone_trabalho'] = preg_replace("/[^0-9]/", "", $this->input->post('telefone_trabalho'));
                     
-                    $token = $data['carta_pedido']['token_acesso'];
+                    if (is_null($adotante))
+                        $adotante = $this->Adotante_model->get_adotante_por_telefone($params['telefone']);
+                    if (is_null($adotante))
+                        $adotante = $this->Adotante_model->get_adotante_por_telefone($params['telefone_trabalho']);
                     
                     if ($adotante)
                     {
@@ -658,11 +650,13 @@ class Carta extends MY_Controller
                     $params = array(
                         'adotante' => $adotante_id,
                     );
-                    $this->Carta_model->update_carta_pedido($id,$params);
+                    $this->Carta_model->update_carta_pedido($id, $params);
                     
                     redirect('carta/index');
                 }
             }
+
+            $data['js_scripts'] = array('carta/adotante.js');
             $data['_view'] = 'carta/adotante';
             $this->load->view('layouts/main',$data);
         }
