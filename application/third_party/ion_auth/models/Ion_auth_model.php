@@ -1730,14 +1730,12 @@ class Ion_auth_model extends CI_Model
 		if ($this->db->trans_status() === FALSE)
 		{
 			$this->db->trans_rollback();
-
 			$this->trigger_events(array('post_update_user', 'post_update_user_unsuccessful'));
 			$this->set_error('update_unsuccessful');
 			return FALSE;
 		}
 
 		$this->db->trans_commit();
-
 		$this->trigger_events(array('post_update_user', 'post_update_user_successful'));
 		$this->set_message('update_successful');
 		return TRUE;
@@ -1761,7 +1759,6 @@ class Ion_auth_model extends CI_Model
 		// delete user from users table should be placed after remove from group
 		$this->db->delete($this->tables['users'], array('id' => $id));
 
-
 		if ($this->db->trans_status() === FALSE)
 		{
 			$this->db->trans_rollback();
@@ -1771,7 +1768,6 @@ class Ion_auth_model extends CI_Model
 		}
 
 		$this->db->trans_commit();
-
 		$this->trigger_events(array('post_delete_user', 'post_delete_user_successful'));
 		$this->set_message('delete_successful');
 		return TRUE;
@@ -2092,7 +2088,6 @@ class Ion_auth_model extends CI_Model
 		}
 
 		$this->db->trans_commit();
-
 		$this->trigger_events(array('post_delete_group', 'post_delete_group_successful'));
 		$this->set_message('group_delete_successful');
 		return TRUE;

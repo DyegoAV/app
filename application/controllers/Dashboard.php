@@ -10,12 +10,6 @@ class Dashboard extends MY_Controller
 
     function index()
     {
-
-        // echo "<pre>";
-        // print_r($this->user);
-        // print_r($this->user_permissions);
-        // exit();
-
         $data['all_campanhas'] = $this->Campanha_model->get_all();
 
         $data['campanha'] = $this->input->get('campanha');

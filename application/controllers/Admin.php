@@ -221,11 +221,11 @@ class Admin extends CI_Controller
         {
             foreach($this->input->post() as $k => $v)
             {
-                if( substr($k, 0, 5) == 'perm_' )
+                if ( substr($k, 0, 5) == 'perm_' )
                 {
-                    $permission_id  =   str_replace("perm_","",$k);
+                    $permission_id = str_replace("perm_", "", $k);
 
-                    if( $v == "X" )
+                    if ( $v == "X" )
                         $this->ion_auth_acl->remove_permission_from_user($user_id, $permission_id);
                     else
                         $this->ion_auth_acl->add_permission_to_user($user_id, $permission_id, $v);

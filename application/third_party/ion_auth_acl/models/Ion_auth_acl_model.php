@@ -172,7 +172,6 @@ class Ion_auth_acl_model extends Ion_auth_model
         }
 
         $this->db->trans_commit();
-
         $this->trigger_events(array('post_delete_permission', 'post_delete_permission_successful'));
         $this->set_message('permission_delete_successful');
         return TRUE;
@@ -347,7 +346,7 @@ class Ion_auth_acl_model extends Ion_auth_model
 
         $this->db->trans_start();
 
-        if( $existing_group_permission )
+        if( $existing_group_permission > 0 )
             $this->db->replace($this->tables['users_permissions'], $data);
         else
             $this->db->insert($this->tables['users_permissions'], $data);
@@ -360,11 +359,10 @@ class Ion_auth_acl_model extends Ion_auth_model
             $this->set_message('user_permission_add_unsuccessful');
             return FALSE;
         }
-        else
-        {
-            $this->set_message('user_permission_add_successful');
-            return TRUE;
-        }
+
+        $this->db->trans_commit();
+        $this->set_message('user_permission_add_successful');
+        return TRUE;
     }
 
     /**
@@ -404,6 +402,7 @@ class Ion_auth_acl_model extends Ion_auth_model
         }
         else
         {
+            $this->db->trans_commit();
             $this->trigger_events(array('post_delete_user_permission', 'post_delete_user_permission_successful'));
             $this->set_message('user_permission_delete_successful');
             return TRUE;
@@ -457,11 +456,10 @@ class Ion_auth_acl_model extends Ion_auth_model
             $this->set_message('group_permission_add_unsuccessful');
             return FALSE;
         }
-        else
-        {
-            $this->set_message('group_permission_add_successful');
-            return TRUE;
-        }
+
+        $this->db->trans_commit();
+        $this->set_message('group_permission_add_successful');
+        return TRUE;
     }
 
     /**
@@ -503,12 +501,11 @@ class Ion_auth_acl_model extends Ion_auth_model
             $this->set_error('group_permission_delete_unsuccessful');
             return FALSE;
         }
-        else
-        {
-            $this->trigger_events(array('post_delete_group_permission', 'post_delete_group_permission_successful'));
-            $this->set_message('group_permission_delete_successful');
-            return TRUE;
-        }
+        
+        $this->db->trans_commit();
+        $this->trigger_events(array('post_delete_group_permission', 'post_delete_group_permission_successful'));
+        $this->set_message('group_permission_delete_successful');
+        return TRUE;
     }
 
     /**
