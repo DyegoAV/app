@@ -4,7 +4,7 @@
             <div class="box-header with-border">
               	<h3 class="box-title">Cadastrar adotante</h3>
             </div>
-            <?php echo form_open('carta/adotante/'.$carta_pedido['id']); ?>
+            <?php echo form_open('carta/adotante/'.$carta_pedido['id'], array("autocomplete"=>"off")); ?>
           	<div class="box-body">
           		<div  class="panel panel-primary">
 					<div class="panel-heading">Carta</div>
@@ -35,14 +35,14 @@
         					<div class="col-md-4">
         						<label for="numero" class="control-label"><span class="text-danger">*</span>Nome</label>
         						<div class="form-group">
-        							<input type="text" name="nome" value="<?php echo $adotante['nome']; ?>" class="form-control" id="nome" />
+        							<input type="text" name="nome" value="<?php echo $adotante['nome']; ?>" class="form-control" id="nome" autocomplete="off" required />
             						<span class="text-danger"><?php echo form_error('nome');?></span>
         						</div>
         					</div>
         					<div class="col-md-4">
         						<label for="numero" class="control-label"><span class="text-danger">*</span>Celular</label>
         						<div class="form-group">
-        							<input type="text" name="celular" value="<?php echo $adotante['telefone']; ?>" class="form-control telefone" id="celular" />
+        							<input type="text" name="celular" value="<?php echo $adotante['telefone']; ?>" class="form-control telefone" id="celular" autocomplete="off" required />
             						<span class="text-danger"><?php echo form_error('celular');?></span>
         						</div>
         					</div>        					
@@ -51,7 +51,7 @@
         					<div class="col-md-6">
         						<label for="numero" class="control-label"><span class="text-danger">*</span>E-mail pessoal (não utilize o profissional)</label>
         						<div class="form-group">
-        							<input type="text" name="email" value="<?php echo $adotante['email']; ?>" class="form-control" id="email" />
+        							<input type="email" name="email" value="<?php echo $adotante['email']; ?>" class="form-control" id="email" autocomplete="off" required />
         							<span class="text-danger"><?php echo form_error('email');?></span>
         						</div>
         					</div>
@@ -60,14 +60,14 @@
         					<div class="col-md-4">
         						<label for="numero" class="control-label">Local de trabalho</label>
         						<div class="form-group">
-        							<input type="text" name="local_trabalho" value="<?php echo $adotante['local_trabalho']; ?>" class="form-control" id="localtrabalho" />
+        							<input type="text" name="local_trabalho" value="<?php echo $adotante['local_trabalho']; ?>" class="form-control" id="localtrabalho" autocomplete="off" />
         							<span class="text-danger"><?php echo form_error('local_trabalho');?></span>
         						</div>
         					</div>
         					<div class="col-md-4">
         						<label for="numero" class="control-label">Telefone do trabalho</label>
         						<div class="form-group">
-        							<input type="text" name="telefone_trabalho" value="<?php echo $adotante['telefone_trabalho']; ?>" class="form-control telefone" id="telefone_trabalho" />
+        							<input type="text" name="telefone_trabalho" value="<?php echo $adotante['telefone_trabalho']; ?>" class="form-control telefone" id="telefone_trabalho" autocomplete="off" />
         							<span class="text-danger"><?php echo form_error('telefone_trabalho');?></span>
         						</div>
         					</div>

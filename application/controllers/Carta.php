@@ -619,17 +619,20 @@ class Carta extends MY_Controller
                 {
                     $email = trim($this->input->post('email'));
                     $adotante = $this->Adotante_model->get_adotante_por_email($email);
-                    
+
                     $params['nome'] = $this->input->post('nome');
                     $params['email'] = $this->input->post('email');
                     $params['telefone'] = preg_replace("/[^0-9]/", "", $this->input->post('celular'));
                     $params['local_trabalho'] = $this->input->post('local_trabalho');
                     $params['telefone_trabalho'] = preg_replace("/[^0-9]/", "", $this->input->post('telefone_trabalho'));
                     
-                    if (is_null($adotante))
+                    /*
+                    // Verifica se já existe adotante com mesmo número de telefone
+                    if (is_null($adotante) && trim($params['telefone'] != ""))
                         $adotante = $this->Adotante_model->get_adotante_por_telefone($params['telefone']);
-                    if (is_null($adotante))
+                    if (is_null($adotante) && $params['telefone_trabalho'] != "")
                         $adotante = $this->Adotante_model->get_adotante_por_telefone($params['telefone_trabalho']);
+                    */
                     
                     if ($adotante)
                     {
