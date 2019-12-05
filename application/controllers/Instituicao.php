@@ -230,4 +230,37 @@ class Instituicao extends MY_Controller
         }
         return $response;
     }
+
+    function atribuir_locais()
+    {
+        $instituicoes = $this->input->post('instituicoes');
+        if (sizeof($instituicoes) > 0) 
+        {
+            foreach ($instituicoes as $instituicao)
+            {
+                $id = $instituicao['instituicao'];
+                $coleta = $instituicao['coleta'];
+                $evento = $instituicao['evento'];
+                $instituicao = $this->Instituicao_model->get_instituicao_vinculo_campanha($id);
+                echo "<pre>";
+                return $instituicao;
+                exit();
+                if ($instituicao['NU_TBC02'])
+                {
+                    $params = array();
+
+                    $params['NU_TBC02'] = $instituicao['NU_TBC02'];
+                    if ($coleta)
+                        $params['local_coleta'] = $coleta;
+                    if ($evento)
+                        $params['local_evento'] = $evento;
+
+                    $this->Instituicao_model->update_carta_pedido($id, $params);
+                }
+            }
+            $this->session->set_flashdata('message_ok', 'Instituições atribuídas com sucesso.');
+            return "ok";
+        }
+        return "erro";
+    }
 }

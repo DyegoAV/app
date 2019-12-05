@@ -21,7 +21,7 @@ $usuario_id = $this->session->userdata('usuario_logado_id');
                     if (array_key_exists("permite_incluir_carta", $permissoes_usuario)):
                 ?>
                 <div class="box-tools">
-                    <a href="<?php echo site_url('carta/new'); ?>" class="btn btn-success">Incluir Carta</a>
+                    <a href="<?php echo site_url('carta/new'); ?>" class="btn btn-success">Nova Carta</a>
                 </div>
                 <?php endif; ?>
             </div>

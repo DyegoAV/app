@@ -7,6 +7,7 @@ class Campanha extends MY_Controller
         parent::__construct();
         $this->load->model('Campanha_model');
         $this->load->model('Instituicao_model');
+        $this->load->model('Evento_model');
 
 		if (!$this->ion_auth_acl->has_permission('permite_acessar_campanha'))
 		{
@@ -28,6 +29,9 @@ class Campanha extends MY_Controller
         $data['campanha'] = $this->Campanha_model->get($id);
         $data['instituicoes'] = $this->Campanha_model->get_instituicoes($id);
         $data['select_instituicoes'] = $this->Instituicao_model->get_all_instituicoes();
+
+        $data['ponto_coleta'] = $this->Evento_model->get_eventos_coleta($data['campanha']->AA_CAMPANHA);
+        $data['locais_evento'] = $this->Evento_model->get_eventos_entrega($data['campanha']->AA_CAMPANHA);
 
         foreach ($data['select_instituicoes'] as $ks => $si) 
         {

@@ -4,7 +4,7 @@
             <div class="box-header">
                 <h3 class="box-title">Usuários</h3>
             	<div class="box-tools">
-                    <a href="<?php echo site_url('usuario/add'); ?>" class="btn btn-success btn-sm">Novo</a> 
+                    <a href="<?php echo site_url('usuario/add'); ?>" class="btn btn-success">Novo Usuário</a> 
                 </div>
             </div>
             <div class="box-body">

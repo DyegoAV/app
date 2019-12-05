@@ -7,7 +7,43 @@ class Evento_model extends CI_Model
     }
 
     function get_eventos() {
+        $this->db->select('evento.*, l.nome as nomeLocalEntrega, l.endereco as enderecoLocalEntrega'.
+            ', l.url_google_maps as mapsLocalEntrega, lt.nome as tipoLocal');
+        $this->db->join('local l', 'l.id = evento.local_entrega');
+        $this->db->join('local_tipo lt', 'lt.id = l.local_tipo');
+        $this->db->order_by('evento.ano_evento', 'desc');
+        $this->db->order_by('evento.inicio', 'asc');
         return $this->db->get('evento')->result_array();
+    }
+
+    function get_evento($id) {
+        $this->db->select('evento.*, l.nome as nomeLocalEntrega, l.endereco as enderecoLocalEntrega'.
+            ', l.url_google_maps as mapsLocalEntrega, lt.nome as tipoLocal');
+        $this->db->join('local l', 'l.id = evento.local_entrega');
+        $this->db->join('local_tipo lt', 'lt.id = l.local_tipo');
+        $this->db->order_by('evento.ano_evento', 'desc');
+        $this->db->order_by('evento.inicio', 'asc');
+        return $this->db->get_where('evento', array('evento.id' => $id))->row_array();
+    }
+
+    function get_eventos_coleta($ano) {
+        $this->db->select('evento.*, l.nome as nomeLocalEntrega, l.endereco as enderecoLocalEntrega'.
+            ', l.url_google_maps as mapsLocalEntrega, lt.nome as tipoLocal');
+        $this->db->join('local l', 'l.id = evento.local_entrega');
+        $this->db->join('local_tipo lt', 'lt.id = l.local_tipo');
+        $this->db->order_by('evento.ano_evento', 'desc');
+        $this->db->order_by('evento.inicio', 'asc');
+        return $this->db->get_where('evento', array('lt.id' => 1, 'evento.ano_evento' => $ano))->result_array();
+    }
+
+    function get_eventos_entrega($ano) {
+        $this->db->select('evento.*, l.nome as nomeLocalEntrega, l.endereco as enderecoLocalEntrega'.
+            ', l.url_google_maps as mapsLocalEntrega, lt.nome as tipoLocal');
+        $this->db->join('local l', 'l.id = evento.local_entrega');
+        $this->db->join('local_tipo lt', 'lt.id = l.local_tipo');
+        $this->db->order_by('evento.ano_evento', 'desc');
+        $this->db->order_by('evento.inicio', 'asc');
+        return $this->db->get_where('evento', array('lt.id' => 2, 'evento.ano_evento' => $ano))->result_array();
     }
 
     function get_evento_por_regiao($idRegiaoAdministrativa, $dataAtual) {
@@ -54,6 +90,17 @@ class Evento_model extends CI_Model
         $this->db->order_by('l.nome', 'asc');
 
         return $this->db->get('evento')->result_array();
+    }
+
+    function add_evento($params) {
+        $this->db->insert('evento', $params);
+        return $this->db->insert_id();
+    }
+
+    function update_evento($id, $params)
+    {
+        $this->db->where('id', $id);
+        return $this->db->update('evento', $params);
     }
 }
 ?>

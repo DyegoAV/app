@@ -4,7 +4,7 @@
             <div class="box-header">
                 <h3 class="box-title">Campanhas</h3>
                 <div class="box-tools">
-                    <a href="<?php echo site_url('campanha/add'); ?>" class="btn btn-success btn-sm">Adicionar Nova</a>
+                    <a href="<?php echo site_url('campanha/add'); ?>" class="btn btn-success">Nova Campanha</a>
                 </div>
             </div>
             <div class="box-body">

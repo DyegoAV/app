@@ -4,7 +4,7 @@
             <div class="box-header">
                 <h3 class="box-title">Instituições</h3>
             	<div class="box-tools">
-                    <a href="<?php echo site_url('instituicao/add'); ?>" class="btn btn-success btn-sm">Novo</a> 
+                    <a href="<?php echo site_url('instituicao/add'); ?>" class="btn btn-success">Nova Instituição</a> 
                 </div>
             </div>
             <div class="box-body">
